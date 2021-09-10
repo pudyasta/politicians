@@ -2,6 +2,7 @@ import React from "react";
 import { createClient } from "contentful";
 import Image from "next/image";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import Skeleton from "../../components/Skeleton";
 
 const client = createClient({
   space: process.env.CONTENTFUL_SPACE_ID,
@@ -14,7 +15,7 @@ export const getStaticPaths = async () => {
   const paths = res.items.map((item) => {
     return { params: { politician: item.fields.slug } };
   });
-  return { paths, fallback: false };
+  return { paths, fallback: true };
 };
 
 export const getStaticProps = async (context) => {
@@ -23,12 +24,24 @@ export const getStaticProps = async (context) => {
     "fields.slug": context.params.politician,
   });
 
+  if (!items) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
+
   return {
     props: { politician: items[0] },
+    revalidate: 1,
   };
 };
 
 export default function Politician({ politician }) {
+  if (!politician) return <Skeleton />;
+
   const {
     featuredImage,
     formerPosition,
