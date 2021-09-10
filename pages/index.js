@@ -12,7 +12,7 @@ export const getStaticProps = async () => {
 
   return {
     props: { politicians: res.items },
-    revaildate: 1,
+    revalidate: 1,
   };
 };
 
