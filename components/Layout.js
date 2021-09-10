@@ -24,7 +24,7 @@ export default function Layout({ children }) {
       </div>
       <main className="my-8 flex justify-center">{children}</main>
       <footer className={styles.footer}>
-        <a>pudy's Development 092021 </a>
+        <a>pudy Development 092021 </a>
       </footer>
     </>
   );
