@@ -24,7 +24,7 @@ export const getStaticProps = async (context) => {
     "fields.slug": context.params.politician,
   });
 
-  if (!items) {
+  if (!items.length) {
     return {
       redirect: {
         destination: "/",
